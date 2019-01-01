@@ -1,0 +1,99 @@
+
+body {
+    font-family: sans-serif;
+    background-color: white;
+    margin: 10px;
+}
+
+h1{
+    background-color: darkblue;
+    color: white;}
+h2,
+h4 {
+    color: orangered;
+}
+
+h1,
+h2 {
+    font-family: sans-serif;
+    margin: 10px;
+}
+
+h3{
+    background-color: white;
+    color: darkblue;
+    margin: 10px;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+p{
+    color: orangered;
+    margin: 10px;
+}
+dd,
+dt {
+    color: black;
+    margin: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: orangered;
+    font-size: .95em;
+    margin: 10px;
+}
+
+.pane {
+    position: absolute;
+    left: 25%;
+    border: 2px solid;
+    border-radius: 25px;
+    padding: 5px;
+    margin: 5px;
+    border-color: orangered;
+    background-color: black;
+}
+
+.header {
+    left: 50%;
+    text-align: center;
+}
+
+.name {
+    width: 50%;
+    display: inline-block;
+    float: left;
+}
+
+.description {
+    /*width: 50%;*/
+    /*display: inline-block;*/
+    /*float: left;*/
+    color: black;
+}
+
+.price {
+    text-align: right;
+    width: 50%;
+    float: right;
+}
+
+.editdeletepane {
+  position: absolute;
+  /*left: 25%;*/
+  /*border: 2px solid;*/
+  /*border-radius: 25px;*/
+  /*padding: 5px;*/
+  margin: 5px;
+  /*color: orangered;*/
+  /*border-color: orangered;*/
+  background-color: white;
+    /*color: black;*/
+}
+
+.flash {
+    background: #cee5f5;
+}
