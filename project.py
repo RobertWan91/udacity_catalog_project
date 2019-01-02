@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 
 app = Flask(__name__)
+app.secret_key = 'super_secret_key'
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -11,6 +12,24 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+
+# JSON_items endpoint
+@app.route('/catalog.json')
+def categoriesMainJSON():
+    categories_all = session.query(Categories).all()
+    # items_all = [session.query(Items).filter_by(cat_id=category.id) for category in categories_all]
+    rev_sub = []
+    rev_json = {'Category': rev_sub}
+    for i in categories_all:
+        i_item = session.query(Items).filter_by(cat_id=i.id).all()
+        i_json_item = [element_item.serialize for element_item in i_item]
+        if i_json_item:
+            element_sub = {'id': i.id, 'name': i.name, 'items': i_json_item}
+        else:
+            element_sub = {'id': i.id, 'name': i.name}
+        rev_sub.append(element_sub)
+    return jsonify(rev_json)
 
 
 # Main page
@@ -50,6 +69,7 @@ def editItem(item_name):
             edititem.description = request.form['description']
         session.add(edititem)
         session.commit()
+        flash("Item/description has been edit!")
         return redirect(url_for('itemdescription', catalog_name=editcategory.name, item_name=edititem.title))
     else:
         return render_template('edititem.html', catalog_name=editcategory.name, item_name=edititem.title,
@@ -64,6 +84,7 @@ def deleteItem(item_name):
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
+        flash("Item/description has been deleted!")
         return redirect(url_for('catagoriesItem', catalog_name=categoryDelete.name))
     else:
         return render_template('deleteitem.html', catalog_name=categoryDelete.name, item_name=itemToDelete.title)
