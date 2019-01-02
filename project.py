@@ -57,6 +57,20 @@ def itemdescription(catalog_name, item_name):
             return render_template('describepage.html', items=i)
 
 
+# Add new item
+@app.route('/catalog/new/', methods=['GET', 'POST'])
+def newItems():
+    if request.method == 'POST':
+        category = session.query(Categories).filter_by(name=request.form['category']).one()
+        items = session.query(Items).filter_by(cat_id=category.id)
+        newItem = Items(title=request.form['title'], description=request.form['description'], cat_id=category.id)
+        session.add(newItem)
+        session.commit()
+        return render_template('itempage.html', categories=category, items=items)
+    else:
+        return render_template('newitem.html')
+
+
 # Edit page
 @app.route('/catalog/<item_name>/edit', methods=['GET', 'POST'])
 def editItem(item_name):

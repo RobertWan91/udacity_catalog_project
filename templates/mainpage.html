@@ -9,11 +9,17 @@
 
       <h1> Catalog App </h1>
 
+
       <h2> Categories </h2>
+
+
+      <div class = 'addpane'>
+      <a href = '{{url_for('newItems') }}'> Create New Item</a>
+      </div>
 
             {% for i in categories %}
 
-  <div class = 'name'>
+      <div class = 'name'>
 
             <p>{{i.name}}</p>
 
@@ -21,6 +27,9 @@
 
 
             {% endfor %}
+
+
+
       </body>
 
 </html>

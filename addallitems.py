@@ -14,12 +14,12 @@ session.commit()
 
 # Items under Soccer
 soccerItem1 = Items(title="Zidane", description="Zidane was in Real Madrid",
-                   categories=category1)
+                    categories=category1)
 session.add(soccerItem1)
 session.commit()
 
 soccerItem2 = Items(title="Messi", description=" best forward striker in Barcelona",
-                   categories=category1)
+                    categories=category1)
 session.add(soccerItem2)
 session.commit()
 
@@ -29,12 +29,12 @@ session.add(category2)
 session.commit()
 
 basketItem1 = Items(title="Kobe Byrant", description="best PG in Lakers",
-                   categories=category2)
+                    categories=category2)
 session.add(basketItem1)
 session.commit()
 
 basketItem2 = Items(title="Stephen Curry", description="best 3 point shooter in NBA",
-                   categories=category2)
+                    categories=category2)
 session.add(basketItem2)
 session.commit()
 
@@ -44,7 +44,7 @@ session.add(category3)
 session.commit()
 
 tennisItem1 = Items(title="Roger Ferderer", description="best tennis player",
-                   categories=category3)
+                    categories=category3)
 session.add(tennisItem1)
 session.commit()
 
@@ -54,7 +54,7 @@ session.add(category4)
 session.commit()
 
 pingpongItem1 = Items(title="Guoliang Liu", description="best ping-pong player and coach",
-                   categories=category4)
+                      categories=category4)
 session.add(pingpongItem1)
 session.commit()
 
@@ -64,7 +64,7 @@ session.add(category5)
 session.commit()
 
 F1Item1 = Items(title="Michael Schumacher", description="best F1 player",
-                   categories=category5)
+                categories=category5)
 session.add(F1Item1)
 session.commit()
 
@@ -74,7 +74,7 @@ session.add(category6)
 session.commit()
 
 swimItem1 = Items(title="Michael Phelps", description="best swimming player",
-                   categories=category6)
+                  categories=category6)
 session.add(swimItem1)
 session.commit()
 
@@ -84,7 +84,7 @@ session.add(category7)
 session.commit()
 
 boxItem1 = Items(title="Michael Tyson", description="great boxing prof",
-                   categories=category7)
+                 categories=category7)
 session.add(boxItem1)
 session.commit()
 
@@ -94,7 +94,7 @@ session.add(category8)
 session.commit()
 
 runItem1 = Items(title="Usain Bolt", description="best sprinter",
-                   categories=category8)
+                 categories=category8)
 session.add(runItem1)
 session.commit()
 
@@ -104,7 +104,7 @@ session.add(category9)
 session.commit()
 
 badminItem1 = Items(title="Roger", description="best tennis player",
-                   categories=category3)
+                    categories=category3)
 session.add(badminItem1)
 session.commit()
 
