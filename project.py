@@ -32,11 +32,9 @@ session = DBSession()
 # Create anti-forgery state token
 @app.route('/login')
 def showLogin():
-    app.logger.info('hehe')
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in range(32))
     login_session['state'] = state
-    app.logger.info('haha')
     return render_template('login.html', STATE=state)
 
 
@@ -120,8 +118,40 @@ def gconnect():
     output += login_session['picture']
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
-    print ("done!")
+    print("done!")
     return output
+
+
+@app.route('/gdisconnect')
+def gdisconnect():
+    access_token = login_session.get('access_token')
+    if access_token is None:
+        print('Access Token is None')
+        response = make_response(json.dumps('Current user not connected.'), 401)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+
+    print('In gdisconnect access token is %s', access_token)
+    print('User name is: ')
+    print(login_session['username'])
+    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
+    h = httplib2.Http()
+    result = h.request(url, 'GET')[0]
+    print('result is ')
+    print(result)
+    if result['status'] == '200':
+        del login_session['access_token']
+        del login_session['gplus_id']
+        del login_session['username']
+        del login_session['email']
+        del login_session['picture']
+        response = make_response(json.dumps('Successfully disconnected.'), 200)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    else:
+        response = make_response(json.dumps('Failed to revoke token for given user.'), 400)
+        response.headers['Content-Type'] = 'application/json'
+        return response
 
 
 # JSON_items endpoint
@@ -145,7 +175,6 @@ def categoriesMainJSON():
 # Main page
 @app.route('/')  # localhost: 8000 --> all categories
 def categoriesMain():
-    app.logger.info('hahaha')
     categories = session.query(Categories).all()
     return render_template('mainpage.html', categories=categories)
 
@@ -171,6 +200,8 @@ def itemdescription(catalog_name, item_name):
 # Add new item
 @app.route('/catalog/new/', methods=['GET', 'POST'])
 def newItems():
+    if 'username' not in login_session:
+        return redirect('/login')
     if request.method == 'POST':
         category = session.query(Categories).filter_by(name=request.form['category']).one()
         items = session.query(Items).filter_by(cat_id=category.id)
@@ -185,6 +216,8 @@ def newItems():
 # Edit page
 @app.route('/catalog/<item_name>/edit', methods=['GET', 'POST'])
 def editItem(item_name):
+    if 'username' not in login_session:
+        return redirect('/login')
     edititem = session.query(Items).filter_by(title=item_name).one()
     editcategory = session.query(Categories).filter_by(id=edititem.cat_id).one()
     if request.method == 'POST':
@@ -204,6 +237,8 @@ def editItem(item_name):
 # Delete page
 @app.route('/catalog/<item_name>/delete', methods=['GET', 'POST'])
 def deleteItem(item_name):
+    if 'username' not in login_session:
+        return redirect('/login')
     itemToDelete = session.query(Items).filter_by(title=item_name).one()
     categoryDelete = session.query(Categories).filter_by(id=itemToDelete.cat_id).one()
     if request.method == 'POST':

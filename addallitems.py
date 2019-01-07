@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Categories, Items
+from database_setup import Base, Categories, Items, User
 
 engine = create_engine('sqlite:///categoriesitem.db')
 Base.metadata.bind = engine
@@ -106,6 +106,12 @@ session.commit()
 badminItem1 = Items(title="Roger", description="best tennis player",
                     categories=category3)
 session.add(badminItem1)
+session.commit()
+
+# Create dummy user
+User1 = User(name="Robo Barista", email="tinnyTim@udacity.com",
+             picture='https://pbs.twimg.com/profile_images/2671170543/18debd694829ed78203a5a36dd364160_400x400.png')
+session.add(User1)
 session.commit()
 
 print('All items added!')
