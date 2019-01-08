@@ -20,7 +20,7 @@ APPLICATION_NAME = "Catalog App Udacity"
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Categories, Items
+from database_setup import Base, Categories, Items, User
 
 engine = create_engine('sqlite:///categoriesitem.db')
 Base.metadata.bind = engine
@@ -110,6 +110,12 @@ def gconnect():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
+    # see if user exists
+    user_id = getUserID(login_session['email'])
+    if not user_id:
+        user_id = createUser(login_session)
+    login_session['user_id'] = user_id
+
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
@@ -120,6 +126,30 @@ def gconnect():
     flash("you are now logged in as %s" % login_session['username'])
     print("done!")
     return output
+
+# User Helper Functions
+
+
+def createUser(login_session):
+    newUser = User(name=login_session['username'], email=login_session[
+                   'email'], picture=login_session['picture'])
+    session.add(newUser)
+    session.commit()
+    user = session.query(User).filter_by(email=login_session['email']).one()
+    return user.id
+
+
+def getUserInfo(user_id):
+    user = session.query(User).filter_by(id=user_id).one()
+    return user
+
+
+def getUserID(email):
+    try:
+        user = session.query(User).filter_by(email=email).one()
+        return user.id
+    except:
+        return None
 
 
 @app.route('/gdisconnect')
@@ -176,7 +206,10 @@ def categoriesMainJSON():
 @app.route('/')  # localhost: 8000 --> all categories
 def categoriesMain():
     categories = session.query(Categories).all()
-    return render_template('mainpage.html', categories=categories)
+    if 'username' not in login_session:
+        return render_template('publicmainpage.html', categories=categories)
+    else:
+        return render_template('mainpage.html', categories=categories)
 
 
 # Items list page
@@ -192,9 +225,14 @@ def catagoriesItem(catalog_name):
 def itemdescription(catalog_name, item_name):
     category = session.query(Categories).filter_by(name=catalog_name).one()
     items = session.query(Items).filter_by(cat_id=category.id)
+    # creator = getUserID(items.user_id)
     for i in items:
         if i.title == item_name:
-            return render_template('describepage.html', items=i)
+            creator = getUserInfo(i.user_id)
+            if 'username' not in login_session or creator.id != login_session['user_id']:
+                return render_template('publicdescribepage.html', items=i)
+            else:
+                return render_template('describepage.html', items=i)
 
 
 # Add new item
@@ -205,7 +243,8 @@ def newItems():
     if request.method == 'POST':
         category = session.query(Categories).filter_by(name=request.form['category']).one()
         items = session.query(Items).filter_by(cat_id=category.id)
-        newItem = Items(title=request.form['title'], description=request.form['description'], cat_id=category.id)
+        newItem = Items(title=request.form['title'], description=request.form['description'], cat_id=category.id,
+                        user_id=login_session['user_id'])
         session.add(newItem)
         session.commit()
         return render_template('itempage.html', categories=category, items=items)
