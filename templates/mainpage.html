@@ -7,12 +7,14 @@
 
       <body>
 
-      <h1> Catalog App HAHA </h1>
+      <h1> Catalog App </h1>
 
 
       <h2> Categories </h2>
 
-
+      <div class = 'topcorner'>
+      <a href = '{{url_for('gdisconnect') }}'> Log Out</a>
+      </div>
       <div class = 'addpane'>
       <a href = '{{url_for('newItems') }}'> Create New Item</a>
       </div>
@@ -28,6 +30,17 @@
 
             {% endfor %}
 
+      <h2> Last Added Items </h2>
+
+            {% for j in last_items %}
+
+      <div class = 'name'>
+
+          <p>{{j.title}}</p>
+
+          </div>
+
+            {% endfor %}
 
 
       </body>

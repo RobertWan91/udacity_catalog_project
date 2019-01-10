@@ -17,12 +17,14 @@ h1,
 h2 {
     font-family: sans-serif;
     margin: 10px;
+    /*float: left;*/
 }
 
 h3{
     background-color: white;
     color: darkblue;
     margin: 10px;
+    float: left;
 }
 
 h2 {
@@ -64,7 +66,7 @@ a {
 
 .name {
     width: 50%;
-    display: inline-block;
+    /*display: inline-block;*/
     float: left;
 }
 
@@ -82,7 +84,7 @@ a {
 }
 
 .editdeletepane {
-  position: absolute;
+  /*position: absolute;*/
   /*left: 25%;*/
   /*border: 2px solid;*/
   /*border-radius: 25px;*/
@@ -94,6 +96,43 @@ a {
     /*color: black;*/
 }
 
+.addpane{
+    /*position: absolute;*/
+    /*left: 0%;*/
+    /*border: 2px solid;*/
+  /*border-radius: 25px;*/
+    padding: 5px;
+    margin:  10px;
+    display: block;
+    /*float: left;*/
+  /*color: orangered;*/
+  /*border-color: orangered;*/
+    background-color: midnightblue;
+    /*width: 50%;*/
+    /*color: black;*/
+}
+
 .flash {
     background: #cee5f5;
+}
+
+.topcorner{
+position:absolute;
+top:0;
+right:0;
+padding: 5px;
+margin:  10px;
+/*display: block;*/
+/*float: left;*/
+/*color: orangered;*/
+/*border-color: orangered;*/
+/*background-color: red;*/
+/*position: absolute;*/
+/*left: 25%;*/
+border: 2px solid;
+border-radius: 25px;
+/*padding: 5px;*/
+/*margin: 5px;*/
+border-color: orangered;
+background-color: black;
 }

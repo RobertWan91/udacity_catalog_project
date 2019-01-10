@@ -5,12 +5,15 @@
 	    </head>
 
 
-      <body>
 
-      <h1> Catalog App HAHA </h1>
+      <h1> Catalog App </h1>
 
 
       <h2> Categories </h2>
+
+      <div class = 'topcorner'>
+      <a href = '{{url_for('showLogin') }}'> Login</a>
+      </div>
 
             {% for i in categories %}
 
@@ -23,7 +26,21 @@
 
             {% endfor %}
 
+      <br clear="all" />
 
+      <h2> Last Added Items </h2>
+
+      <br clear="all" />
+
+            {% for j in last_items %}
+
+      <div class = 'name'>
+
+          <p>{{j.title}}</p>
+
+          </div>
+
+            {% endfor %}
 
       </body>
 

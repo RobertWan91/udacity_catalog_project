@@ -206,10 +206,11 @@ def categoriesMainJSON():
 @app.route('/')  # localhost: 8000 --> all categories
 def categoriesMain():
     categories = session.query(Categories).all()
+    last_items = session.query(Items).order_by(Items.id.desc()).limit(10)
     if 'username' not in login_session:
-        return render_template('publicmainpage.html', categories=categories)
+        return render_template('publicmainpage.html', categories=categories, last_items=last_items)
     else:
-        return render_template('mainpage.html', categories=categories)
+        return render_template('mainpage.html', categories=categories, last_items=last_items)
 
 
 # Items list page
