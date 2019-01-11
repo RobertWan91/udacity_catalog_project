@@ -16,8 +16,10 @@ session.commit()
 session.query(Categories).all()
 
 # first Items
-myFirstItem = Item(title="Zidane", description="Zidane acted as the coach of Real Madrid with three European Champion",
-                   categories=myFirstCategories)
+myFirstItem = Items(title="Zidane",
+                    description="Zidane acted as the coach of Real Madrid "
+                                "with three European Champion",
+                    categories=myFirstCategories)
 session.add(myFirstItem)
 session.commit()
 session.query(Items).all()
