@@ -222,10 +222,12 @@ def catagoriesItem(catalog_name):
 
 
 # Item description page
-@app.route('/catalog/<catalog_name>/<item_name>/')
-def itemdescription(catalog_name, item_name):
-    category = session.query(Categories).filter_by(name=catalog_name).one()
-    items = session.query(Items).filter_by(cat_id=category.id)
+@app.route('/catalog/<item_name>/')
+# def itemdescription(catalog_name, item_name):
+def itemdescription(item_name):
+    # category = session.query(Categories).filter_by(name=catalog_name).one()
+    # items = session.query(Items).filter_by(cat_id=category.id)
+    items = session.query(Items).filter_by(title=item_name)
     # creator = getUserID(items.user_id)
     for i in items:
         if i.title == item_name:

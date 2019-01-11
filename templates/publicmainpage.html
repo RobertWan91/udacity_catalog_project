@@ -19,13 +19,16 @@
 
       <div class = 'name'>
 
-            <p>{{i.name}}</p>
+            <br clear="all" />
+            <a href = '{{url_for('catagoriesItem', catalog_name=i.name) }}'> {{i.name}}</a>
+            <br clear="all" />
 
             </div>
 
 
             {% endfor %}
 
+      <br clear="all" />
       <br clear="all" />
 
       <h2> Last Added Items </h2>
@@ -36,9 +39,11 @@
 
       <div class = 'name'>
 
-          <p>{{j.title}}</p>
+            <br clear="all" />
+            <a href = '{{url_for('itemdescription', item_name=j.title) }}'> {{j.title}}</a>
+            <br clear="all" />
 
-          </div>
+            </div>
 
             {% endfor %}
 
