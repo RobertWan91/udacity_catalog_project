@@ -275,7 +275,8 @@ def editItem(item_name):
         title=item_name).one()
     editcategory = session.query(Categories).filter_by(
         id=edititem.cat_id).one()
-    if request.method == 'POST':
+    creator = getUserInfo(edititem.user_id)
+    if request.method == 'POST' and creator.id == login_session['user_id']:
         if request.form['title']:
             edititem.title = request.form['title']
         if request.form['description']:
@@ -302,7 +303,8 @@ def deleteItem(item_name):
         title=item_name).one()
     categoryDelete = session.query(Categories).filter_by(
         id=itemToDelete.cat_id).one()
-    if request.method == 'POST':
+    creator = getUserInfo(itemToDelete.user_id)
+    if request.method == 'POST' and creator.id == login_session['user_id']:
         session.delete(itemToDelete)
         session.commit()
         flash("Item/description has been deleted!")
